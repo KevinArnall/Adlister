@@ -10,7 +10,11 @@
     <body>
         <jsp:include page="/WEB-INF/partials/navbar.jsp"/>
         <div class="container mt-5 pt-5">
-            <h1>Here Are all the ads!</h1>
+            <form class="form-inline" method="POST" action="/ads">
+                <input name="search" type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="Search">
+
+                <button type="submit" class="btn btn-primary mb-2">Search</button>
+            </form>
             <div class="row">
                 <jsp:include page="/WEB-INF/partials/partialAd.jsp"/>
             </div>

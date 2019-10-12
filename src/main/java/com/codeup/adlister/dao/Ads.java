@@ -17,4 +17,7 @@ public interface Ads {
 
     // Get an ad by id
     Ad getAdById(long id);
+
+    //Get a list of ads made by a specific user
+    List<Ad> getAdsBySearchTerm(String search);
 }

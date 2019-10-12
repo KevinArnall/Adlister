@@ -28,7 +28,7 @@ public class MySQLAdsDao implements Ads {
     public List<Ad> all() {
         PreparedStatement stmt = null;
         try {
-            stmt = connection.prepareStatement("SELECT * FROM ads");
+            stmt = connection.prepareStatement("SELECT * FROM ads ORDER BY date_created DESC");
             ResultSet rs = stmt.executeQuery();
             return createAdsFromResults(rs);
         } catch (SQLException e) {
@@ -40,7 +40,7 @@ public class MySQLAdsDao implements Ads {
     public List<Ad> getAdsByUserId(long id) {
         PreparedStatement stmt = null;
         try {
-            stmt = connection.prepareStatement("SELECT * FROM ads WHERE user_id = ?");
+            stmt = connection.prepareStatement("SELECT * FROM ads WHERE user_id = ? ORDER BY date_created DESC");
             stmt.setLong(1, id);
 
             ResultSet rs = stmt.executeQuery();
@@ -62,6 +62,20 @@ public class MySQLAdsDao implements Ads {
             return extractAd(rs);
         } catch (SQLException e) {
             throw new RuntimeException("Error retrieving ads by id.", e);
+        }
+    }
+
+    public List<Ad> getAdsBySearchTerm(String search) {
+        PreparedStatement stmt = null;
+        search = "%" + search + "%";
+        try {
+            stmt = connection.prepareStatement("SELECT * FROM ads WHERE title LIKE ? OR description LIKE ? ORDER BY date_created DESC");
+            stmt.setString(1, search);
+            stmt.setString(2, search);
+            ResultSet rs = stmt.executeQuery();
+            return createAdsFromResults(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving ads by user id.", e);
         }
     }
 
