@@ -13,7 +13,8 @@
             <h3>${ad.title}</h3>
             <div class="row">
                 <div class="col">
-                    <p>${ad.getDayOfWeekCreated()} ${ad.getMonthCreated()} ${ad.getDayOfMonthCreated()}</p>
+                    <p>Posted on: ${ad.getDayOfWeekCreated()} ${ad.getMonthCreated()} ${ad.getDayOfMonthCreated()}</p>
+                    <p>By: ${user.username}</p>
                     <p>${ad.description}</p>
                 </div>
                 <div class="col text-center">

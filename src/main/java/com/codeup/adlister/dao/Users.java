@@ -8,5 +8,6 @@ public interface Users {
 
     Long insert(User user);
 
+    User findUserById(long id);
 
 }
