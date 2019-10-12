@@ -13,7 +13,7 @@
             <h1>Welcome, ${sessionScope.user.username}!</h1>
             <h1>Here Are all your ads!</h1>
             <div class="row ">
-                <jsp:include page="/WEB-INF/partials/ad.jsp"/>
+                <jsp:include page="/WEB-INF/partials/partialAd.jsp"/>
             </div>
         </div>
     </body>

@@ -12,7 +12,7 @@
         <div class="container mt-5">
             <h1>Here Are all the ads!</h1>
             <div class="row">
-                <jsp:include page="/WEB-INF/partials/ad.jsp"/>
+                <jsp:include page="/WEB-INF/partials/partialAd.jsp"/>
             </div>
         </div>
     </body>
