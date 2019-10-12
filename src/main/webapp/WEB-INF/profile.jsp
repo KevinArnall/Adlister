@@ -13,18 +13,7 @@
             <h1>Welcome, ${sessionScope.user.username}!</h1>
             <h1>Here Are all your ads!</h1>
             <div class="row ">
-                <c:forEach var="ad" items="${ads}">
-                    <div class="col-md-4">
-                        <div class="card mb-3">
-                            <div class="card-header">
-                                <h4 class="card-title">${ad.title}</h4>
-                            </div>
-                            <div class="card-body">
-                                <p class="card-text">${ad.description}</p>
-                            </div>
-                        </div>
-                    </div>
-                </c:forEach>
+                <jsp:include page="/WEB-INF/partials/ad.jsp"/>
             </div>
         </div>
     </body>

@@ -37,7 +37,16 @@ public class LoginServlet extends HttpServlet {
         if (validAttempt) {
             request.getSession().setAttribute("user", user);
             request.getSession().setAttribute("loggedin", true);
-            response.sendRedirect("/profile");
+
+            if (request.getSession().getAttribute("redirected") != null) {
+                // If user was redirected, send them back to where they were
+                request.getSession().removeAttribute("redirected");
+                response.sendRedirect((String) request.getSession().getAttribute("redirectedfrom"));
+                request.getSession().removeAttribute("redirectedfrom");
+            } else {
+                // Otherwise default to the profile page
+                response.sendRedirect("/profile");
+            }
         } else {
             response.sendRedirect("/login");
         }

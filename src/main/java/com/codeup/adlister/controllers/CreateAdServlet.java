@@ -10,12 +10,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 @WebServlet(name = "controllers.CreateAdServlet", urlPatterns = "/ads/create")
 public class CreateAdServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //If not logged in
         if (request.getSession().getAttribute("user") == null) {
+            // Set some attributes so they can be redirected back here when they log in
+            request.getSession().setAttribute("redirected", true);
+
+            request.getSession().setAttribute("redirectedfrom", "/ads/create");
             response.sendRedirect("/login");
             return;
         }
@@ -26,9 +32,10 @@ public class CreateAdServlet extends HttpServlet {
         User user = (User) request.getSession().getAttribute("user");
 
         Ad ad = new Ad(
-                user.getId(), // for now we'll hardcode the user id
+                user.getId(),
                 request.getParameter("title"),
-                request.getParameter("description")
+                request.getParameter("description"),
+                LocalDateTime.now()
         );
         DaoFactory.getAdsDao().insert(ad);
         response.sendRedirect("/ads");
