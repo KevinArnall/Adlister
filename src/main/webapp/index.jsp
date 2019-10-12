@@ -8,7 +8,7 @@
     </head>
     <body>
         <jsp:include page="/WEB-INF/partials/navbar.jsp"/>
-        <div class="container mt-5">
+        <div class="container mt-5 pt-5">
             <h1>Welcome to the Adlister!</h1>
         </div>
     </body>

@@ -9,7 +9,7 @@
     </head>
     <body>
         <jsp:include page="/WEB-INF/partials/navbar.jsp"/>
-        <div class="container mt-5">
+        <div class="container mt-5 pt-5">
             <h1>Here Are all the ads!</h1>
             <div class="row">
                 <jsp:include page="/WEB-INF/partials/partialAd.jsp"/>
