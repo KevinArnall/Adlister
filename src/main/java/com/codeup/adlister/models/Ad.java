@@ -3,6 +3,8 @@ package com.codeup.adlister.models;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.format.TextStyle;
+import java.util.Locale;
 
 public class Ad {
 
@@ -11,7 +13,6 @@ public class Ad {
     private String title;
     private String description;
     private LocalDateTime dateCreated;
-    private LocalDateTime currentTime;
 
     public Ad(long id, long userId, String title, String description, LocalDateTime dateCreated) {
         this.id = id;
@@ -19,7 +20,6 @@ public class Ad {
         this.title = title;
         this.description = description;
         this.dateCreated = dateCreated;
-        this.currentTime = LocalDateTime.now();
     }
 
     public Ad(long userId, String title, String description, LocalDateTime dateCreated) {
@@ -30,7 +30,23 @@ public class Ad {
     }
 
     public Duration getTimeSinceCreation() {
-        return Duration.between(currentTime, dateCreated);
+        return Duration.between(dateCreated, LocalDateTime.now()).abs();
+    }
+
+    public long getDaysSinceCreation() {
+        return getTimeSinceCreation().toDays();
+    }
+
+    public long getHoursSinceCreation() {
+        return getTimeSinceCreation().toHours();
+    }
+
+    public long getMinutesSinceCreation() {
+        return getTimeSinceCreation().toMinutes();
+    }
+
+    public long getSecondsSinceCreation() {
+        return getTimeSinceCreation().getSeconds();
     }
 
     public long getId() {
@@ -63,6 +79,18 @@ public class Ad {
 
     public void setDateCreated(LocalDateTime dateCreated) {
         this.dateCreated = dateCreated;
+    }
+
+    public String getDayOfWeekCreated() {
+        return dateCreated.getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.ENGLISH);
+    }
+
+    public String getMonthCreated() {
+        return dateCreated.getMonth().getDisplayName(TextStyle.SHORT, Locale.ENGLISH);
+    }
+
+    public int getDayOfMonthCreated() {
+        return dateCreated.getDayOfMonth();
     }
 
     public String getDescription() {
