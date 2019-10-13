@@ -12,9 +12,7 @@
         <div class="container mt-5 pt-5">
             <h1>Welcome, ${sessionScope.user.username}!</h1>
             <h1>Here Are all your ads!</h1>
-            <div class="row ">
-                <jsp:include page="/WEB-INF/partials/partialAd.jsp"/>
-            </div>
+            <jsp:include page="/WEB-INF/partials/adListPartial.jsp.jsp"/>
         </div>
     </body>
 </html>

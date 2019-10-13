@@ -1,18 +1,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<c:forEach var="ad" items="${ads}">
-    <div class="col-md-3">
-        <div class="card mb-3">
-            <a href="/ads/ad?id=${ad.id}">
-                <img src="https://via.placeholder.com/150" class="card-img-top" alt="...">
-            </a>
-            <div class="card-body">
-                <h5 class="card-title"><a href="/ads/ad?id=${ad.id}">${ad.title}</a></h5>
-                <p class="card-text">${ad.getDayOfWeekCreated()} ${ad.getMonthCreated()} ${ad.getDayOfMonthCreated()}</p>
-                <p class="card-text">${ad.description}</p>
-            </div>
-            <div class="card-footer">
+<ul class="list-unstyled">
+    <c:forEach var="ad" items="${ads}">
+        <li class="media mb-3">
+            <img src="https://via.placeholder.com/64" class="align-self-center mr-3" alt="...">
+            <div class="media-body">
+                <h5 class="mt-0"><a href="/ads/ad?id=${ad.id}">${ad.title}</a></h5>
+                    ${ad.description}
                 <c:choose>
                     <c:when test="${ad.getHoursSinceCreation() >= 24}">
                         <small class="text-muted">Posted ${ad.getDaysSinceCreation()} days ago </small>
@@ -28,6 +23,6 @@
                     </c:otherwise>
                 </c:choose>
             </div>
-        </div>
-    </div>
-</c:forEach>
+        </li>
+    </c:forEach>
+</ul>

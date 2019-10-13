@@ -16,16 +16,41 @@ public class AdsIndexServlet extends HttpServlet {
         if (request.getParameter("search") != null) {
             String search = request.getParameter("search");
             request.setAttribute("ads", DaoFactory.getAdsDao().getAdsBySearchTerm(search));
+            request.setAttribute("search", search);
         } else {
             request.setAttribute("ads", DaoFactory.getAdsDao().all());
         }
+
+        if (request.getSession().getAttribute("view") != null) {
+            if (request.getSession().getAttribute("view").equals("card")) {
+                request.setAttribute("view", "card");
+            } else {
+                request.setAttribute("view", "list");
+            }
+        } else {
+            request.setAttribute("view", "list");
+        }
+
         request.getRequestDispatcher("/WEB-INF/ads/index.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String searchTerm = request.getParameter("search");
 
-        String query = "/ads?search=" + searchTerm;
-        response.sendRedirect(query);
+        String url = "/ads";
+
+        if (request.getParameter("view") != null) {
+            if (request.getParameter("view").equals("card")) {
+                request.getSession().setAttribute("view", "card");
+            } else if (request.getParameter("view").equals("list")) {
+                request.getSession().setAttribute("view", "list");
+            }
+        }
+
+        if (!request.getParameter("search").equals("")) {
+            String searchTerm = request.getParameter("search");
+            url += "?search=" + searchTerm;
+        }
+
+        response.sendRedirect(url);
     }
 }
