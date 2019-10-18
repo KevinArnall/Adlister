@@ -14,28 +14,28 @@
             <form class="form-inline" method="POST" action="/ads">
 
                 <input name="search" type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" value="${search}" placeholder="Search">
-                <c:choose>
-                    <c:when test="${view == 'card'}">
-                        <div class="form-check form-check-inline">
+                <div class="form-check form-check-inline">
+                    <c:choose>
+                        <c:when test="${view == 'card'}">
                             <input class="form-check-input" checked type="radio" name="view" id="inlineRadio1" value="card">
-                            <label class="form-check-label" for="inlineRadio1">Cards</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="view" id="inlineRadio2" value="list">
-                            <label class="form-check-label" for="inlineRadio2">List</label>
-                        </div>
-                    </c:when>
-                    <c:otherwise>
-                        <div class="form-check form-check-inline">
+                        </c:when>
+                        <c:otherwise>
                             <input class="form-check-input" type="radio" name="view" id="inlineRadio1" value="card">
-                            <label class="form-check-label" for="inlineRadio1">Cards</label>
-                        </div>
-                        <div class="form-check form-check-inline">
+                        </c:otherwise>
+                    </c:choose>
+                    <label class="form-check-label" for="inlineRadio1">Cards</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <c:choose>
+                        <c:when test="${view == 'list'}">
                             <input class="form-check-input" checked type="radio" name="view" id="inlineRadio2" value="list">
-                            <label class="form-check-label" for="inlineRadio2">List</label>
-                        </div>
-                    </c:otherwise>
-                </c:choose>
+                        </c:when>
+                        <c:otherwise>
+                            <input class="form-check-input" type="radio" name="view" id="inlineRadio2" value="list">
+                        </c:otherwise>
+                    </c:choose>
+                    <label class="form-check-label" for="inlineRadio2">List</label>
+                </div>
                 <button type="submit" class="btn btn-primary mb-2 mr-sm-2">Update</button>
             </form>
             <c:choose>
