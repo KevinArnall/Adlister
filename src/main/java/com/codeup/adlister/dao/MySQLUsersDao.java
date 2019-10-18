@@ -9,8 +9,10 @@ public class MySQLUsersDao implements Users {
 
     private Connection connection;
 
+    // Constructor
     public MySQLUsersDao(Config config) {
         try {
+            // Register new connection to db with the driver
             DriverManager.registerDriver(new Driver());
             connection = DriverManager.getConnection(
                     config.getUrl(),
@@ -24,10 +26,13 @@ public class MySQLUsersDao implements Users {
 
     @Override
     public User findByUsername(String username) {
-        String query = "SELECT * FROM users WHERE username = ? LIMIT 1";
         try {
-            PreparedStatement stmt = connection.prepareStatement(query);
+            // New statement to find a user with a specific username
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM users WHERE username = ? LIMIT 1");
+            // Insert username
             stmt.setString(1, username);
+
+            // Execute query and return found user
             return extractUser(stmt.executeQuery());
         } catch (SQLException e) {
             throw new RuntimeException("Error finding a user by username", e);
@@ -36,14 +41,14 @@ public class MySQLUsersDao implements Users {
 
     @Override
     public User findUserById(long id) {
-        PreparedStatement stmt = null;
         try {
-            stmt = connection.prepareStatement("SELECT * FROM users WHERE id = ?");
+            // New statement to find a user with a specific user id
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM users WHERE id = ?");
+            // Insert id
             stmt.setLong(1, id);
 
-            ResultSet rs = stmt.executeQuery();
-
-            return extractUser(rs);
+            // Execute query and return found user
+            return extractUser(stmt.executeQuery());
         } catch (SQLException e) {
             throw new RuntimeException("Error retrieving user by id.", e);
         }
@@ -51,15 +56,26 @@ public class MySQLUsersDao implements Users {
 
     @Override
     public Long insert(User user) {
-        String query = "INSERT INTO users(username, email, password) VALUES (?, ?, ?)";
         try {
+            // New query to insert a user into db
+            String query = "INSERT INTO users(username, email, password) VALUES (?, ?, ?)";
+            // Prepare statement
             PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            // Insert users details
             stmt.setString(1, user.getUsername());
             stmt.setString(2, user.getEmail());
             stmt.setString(3, user.getPassword());
+
+            // Execute update
             stmt.executeUpdate();
+
+            // Get generated keys from query
             ResultSet rs = stmt.getGeneratedKeys();
+
+            // Need this for some reason
             rs.next();
+
+            // Return generated key
             return rs.getLong(1);
         } catch (SQLException e) {
             throw new RuntimeException("Error creating new user", e);
@@ -67,9 +83,12 @@ public class MySQLUsersDao implements Users {
     }
 
     private User extractUser(ResultSet rs) throws SQLException {
+        // If not found, return null
         if (!rs.next()) {
             return null;
         }
+
+        // Create user from columns in the ResultSet
         return new User(
                 rs.getLong("id"),
                 rs.getString("username"),

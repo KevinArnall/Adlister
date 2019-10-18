@@ -15,10 +15,14 @@ import java.io.IOException;
 public class RegisterServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        // Send to register jsp
         request.getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        // Get the users information from the form
         String username = request.getParameter("username");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
@@ -35,15 +39,19 @@ public class RegisterServlet extends HttpServlet {
             return;
         }
 
+        // Check if the username exists
         if (DaoFactory.getUsersDao().findByUsername(username) == null) {
+            // If it doesn't, make a new user and insert them into the db
             User user = new User(username, email, Password.hash(password));
             DaoFactory.getUsersDao().insert(user);
         } else {
+            // User already exists
             System.out.println("username already exists");
             response.sendRedirect("/register");
             return;
         }
-        // create and save a new user
+
+        // Send them to the login page to login
         response.sendRedirect("/login");
     }
 }

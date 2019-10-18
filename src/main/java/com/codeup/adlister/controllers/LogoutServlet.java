@@ -10,6 +10,8 @@ import java.io.IOException;
 public class LogoutServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        // Remove the user from the session and redirect to the login page
         request.getSession().removeAttribute("user");
         request.getSession().invalidate();
         response.sendRedirect("/login");

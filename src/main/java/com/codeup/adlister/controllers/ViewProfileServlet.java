@@ -14,13 +14,20 @@ import java.io.IOException;
 public class ViewProfileServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        // If the user is not logged in, redirect to the login page
         if (request.getSession().getAttribute("user") == null) {
             response.sendRedirect("/login");
             return;
         }
+
+        // Get the user that is currently logged in from the session
         User user = (User) request.getSession().getAttribute("user");
 
+        // Get all the ads made by the user
         request.setAttribute("ads", DaoFactory.getAdsDao().getAdsByUserId(user.getId()));
+
+        // Send jsp
         request.getRequestDispatcher("/WEB-INF/profile.jsp").forward(request, response);
     }
 }

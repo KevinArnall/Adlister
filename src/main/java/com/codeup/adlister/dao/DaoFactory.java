@@ -6,6 +6,7 @@ public class DaoFactory {
     private static Users usersDao;
     private static Config config = new Config();
 
+    // Return a Dao object that can get ads from the db
     public static Ads getAdsDao() {
         if (adsDao == null) {
             adsDao = new MySQLAdsDao(config);
@@ -13,6 +14,7 @@ public class DaoFactory {
         return adsDao;
     }
 
+    // Return a Dao object that can get users from the db
     public static Users getUsersDao() {
         if (usersDao == null) {
             usersDao = new MySQLUsersDao(config);

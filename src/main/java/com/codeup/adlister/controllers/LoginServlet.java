@@ -15,26 +15,35 @@ import java.io.IOException;
 public class LoginServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        // If they are already logged in, send them to the profile
         if (request.getSession().getAttribute("user") != null) {
             response.sendRedirect("/profile");
             return;
         }
+
+        // Otherwise, send to the login jsp
         request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        // Get the username and password from the request
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         User user = DaoFactory.getUsersDao().findByUsername(username);
 
+        // If the user was not found in the db, redirect back to the login page
         if (user == null) {
             response.sendRedirect("/login");
             return;
         }
 
+        // If the user was found, check if their password matches
         boolean validAttempt = Password.check(password, user.getPassword());
 
         if (validAttempt) {
+            // Set the user to logged in in the session
             request.getSession().setAttribute("user", user);
             request.getSession().setAttribute("loggedin", true);
 
@@ -48,6 +57,7 @@ public class LoginServlet extends HttpServlet {
                 response.sendRedirect("/profile");
             }
         } else {
+            // Else redirect to the login page
             response.sendRedirect("/login");
         }
     }
