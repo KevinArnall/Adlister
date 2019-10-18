@@ -27,6 +27,18 @@ public class ViewProfileServlet extends HttpServlet {
         // Get all the ads made by the user
         request.setAttribute("ads", DaoFactory.getAdsDao().getAdsByUserId(user.getId()));
 
+        // Get the current view option
+        if (request.getSession().getAttribute("view") != null) {
+            if (request.getSession().getAttribute("view").equals("card")) {
+                request.setAttribute("view", "card");
+            } else {
+                request.setAttribute("view", "list");
+            }
+        } else {
+            // Default to list view
+            request.setAttribute("view", "list");
+        }
+
         // Send jsp
         request.getRequestDispatcher("/WEB-INF/profile.jsp").forward(request, response);
     }
