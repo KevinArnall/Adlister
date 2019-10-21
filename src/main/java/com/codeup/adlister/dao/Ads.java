@@ -20,4 +20,7 @@ public interface Ads {
 
     // Get a list of ads that match a search term
     List<Ad> getAdsBySearchTerm(String search);
+
+    // Get a list of ads based on category
+    List<Ad> getAdsByCategory(String filter);
 }

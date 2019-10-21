@@ -4,6 +4,7 @@ package com.codeup.adlister.models;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.TextStyle;
+import java.util.List;
 import java.util.Locale;
 
 public class Ad {
@@ -13,20 +14,23 @@ public class Ad {
     private String title;
     private String description;
     private LocalDateTime dateCreated;
+    private List<String> categories;
 
-    public Ad(long id, long userId, String title, String description, LocalDateTime dateCreated) {
+    public Ad(long id, long userId, String title, String description, LocalDateTime dateCreated, List<String> categories) {
         this.id = id;
         this.userId = userId;
         this.title = title;
         this.description = description;
         this.dateCreated = dateCreated;
+        this.categories = categories;
     }
 
-    public Ad(long userId, String title, String description, LocalDateTime dateCreated) {
+    public Ad(long userId, String title, String description, LocalDateTime dateCreated, List<String> categories) {
         this.userId = userId;
         this.title = title;
         this.description = description;
         this.dateCreated = dateCreated;
+        this.categories = categories;
     }
 
     public Duration getTimeSinceCreation() {
@@ -99,5 +103,13 @@ public class Ad {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<String> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<String> categories) {
+        this.categories = categories;
     }
 }

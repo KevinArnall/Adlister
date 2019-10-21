@@ -12,6 +12,9 @@
                     <h5 class="card-title"><a href="/ads/ad?id=${ad.id}">${ad.title}</a></h5>
                     <p class="card-text">${ad.getDayOfWeekCreated()} ${ad.getMonthCreated()} ${ad.getDayOfMonthCreated()}</p>
                     <p class="card-text">${ad.description}</p>
+                    <c:forEach var="category" items="${ad.categories}">
+                        <a class="badge badge-primary" href="?filter=${category}">${category}</a>
+                    </c:forEach>
                 </div>
                 <div class="card-footer">
                     <c:choose>

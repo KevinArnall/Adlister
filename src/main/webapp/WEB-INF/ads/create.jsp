@@ -14,6 +14,7 @@
                         <div class="card-body text-center">
                             <h1 class="card-title">Create a new ad</h1>
                             <form action="/ads/create" method="post">
+                                <%--                                                                <form action="https://request-inspector.glitch.me/" method="post">--%>
                                 <div class="form-group">
                                     <label for="title">Title</label>
                                     <input id="title" name="title" class="form-control" type="text" required>
@@ -21,6 +22,17 @@
                                 <div class="form-group">
                                     <label for="description">Description</label>
                                     <textarea id="description" name="description" class="form-control" required></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Categories</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" name="categories" type="checkbox" id="inlineCheckbox1" value="For Sale">
+                                        <label class="form-check-label" for="inlineCheckbox1">For sale</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" name="categories" type="checkbox" id="inlineCheckbox2" value="Help Wanted">
+                                        <label class="form-check-label" for="inlineCheckbox2">Help Wanted</label>
+                                    </div>
                                 </div>
                                 <button type="submit" class="btn btn-block btn-primary">Submit</button>
                             </form>

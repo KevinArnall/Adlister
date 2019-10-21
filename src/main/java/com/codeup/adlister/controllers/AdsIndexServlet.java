@@ -27,6 +27,12 @@ public class AdsIndexServlet extends HttpServlet {
             request.setAttribute("ads", DaoFactory.getAdsDao().all());
         }
 
+        if (request.getParameter("filter") != null) {
+            String filter = request.getParameter("filter");
+
+            request.setAttribute("ads", DaoFactory.getAdsDao().getAdsByCategory(filter));
+        }
+
         // Check if the view changed
         // Store it in the session so it persists
         if (request.getSession().getAttribute("view") != null) {

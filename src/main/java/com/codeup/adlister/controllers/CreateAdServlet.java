@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 
 @WebServlet(name = "controllers.CreateAdServlet", urlPatterns = "/ads/create")
 public class CreateAdServlet extends HttpServlet {
@@ -36,12 +38,16 @@ public class CreateAdServlet extends HttpServlet {
         // Get the user that is currently logged in
         User user = (User) request.getSession().getAttribute("user");
 
+        // Get the categories that the user selected
+        List<String> categories = Arrays.asList(request.getParameterValues("categories"));
+
         // Create a new ad from the currently logged in user, the title and description that were submitted, and the current date time
         Ad ad = new Ad(
                 user.getId(),
                 request.getParameter("title"),
                 request.getParameter("description"),
-                LocalDateTime.now()
+                LocalDateTime.now(),
+                categories
         );
 
         // Insert the ad into the db

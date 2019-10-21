@@ -1,9 +1,9 @@
 USE adlister_db;
 
+drop table if exists ad_cat;
 DROP TABLE IF EXISTS ads;
 DROP TABLE IF EXISTS users;
 drop table if exists categories;
-drop table if exists ad_cat;
 
 CREATE TABLE users
 (
@@ -39,4 +39,4 @@ create table ad_cat
     cat_id int unsigned not null,
     foreign key (ad_id) references ads (id),
     foreign key (cat_id) references categories (id)
-)
+);

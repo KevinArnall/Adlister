@@ -80,6 +80,22 @@ public class MySQLAdsDao implements Ads {
         }
     }
 
+    @Override
+    public List<Ad> getAdsByCategory(String filter) {
+        try {
+            // Statement that joins the categories table to the ads table and returns ads with a specific category
+            PreparedStatement stmt = connection.prepareStatement("SELECT ads.id, user_id, title, description, date_created FROM ads JOIN ad_cat ac on ads.id = ac.ad_id JOIN categories c on ac.cat_id = c.id WHERE c.name = ?");
+            stmt.setString(1, filter);
+
+            // Execute
+            ResultSet rs = stmt.executeQuery();
+
+            return createAdsFromResults(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving ads by category", e);
+        }
+    }
+
     public List<Ad> getAdsBySearchTerm(String search) {
 
         // Add % to search term so it can be used the sql query
@@ -122,6 +138,12 @@ public class MySQLAdsDao implements Ads {
             // Again not sure why this exists
             rs.next();
 
+            // Need to get the ad id before we can link the categories to it
+            ad.setId(rs.getLong(1));
+
+            // Insert the categories
+            DaoFactory.getCategoriesDao().insert(ad);
+
             // Return generated keys
             return rs.getLong(1);
         } catch (SQLException e) {
@@ -136,7 +158,8 @@ public class MySQLAdsDao implements Ads {
                 rs.getLong("user_id"),
                 rs.getString("title"),
                 rs.getString("description"),
-                rs.getTimestamp("date_created").toLocalDateTime()
+                rs.getTimestamp("date_created").toLocalDateTime(),
+                DaoFactory.getCategoriesDao().getCategoriesByAdId(rs.getLong("id"))
         );
     }
 
