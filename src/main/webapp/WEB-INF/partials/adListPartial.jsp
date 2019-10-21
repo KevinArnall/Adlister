@@ -5,11 +5,8 @@
     <c:forEach var="ad" items="${ads}">
         <li class="media mb-3">
             <img src="https://via.placeholder.com/64" class="align-self-start mr-3" alt="...">
-            <div class="media-body">
-                <h5 class="mt-0"><a href="/ads/ad?id=${ad.id}">${ad.title}</a>
-                    <c:forEach var="category" items="${ad.categories}">
-                        <a class="badge badge-primary" href="?filter=${category}">${category}</a>
-                    </c:forEach>
+            <div class="media-body text-truncate">
+                <h5 style="width: 50%" class="mt-0 text-truncate"><a href="/ads/ad?id=${ad.id}">${ad.title}</a>
                 </h5>
                     ${ad.description}
                 <p>
@@ -27,6 +24,9 @@
                             <small class="text-muted">Posted ${ad.getSecondsSinceCreation()} seconds ago </small>
                         </c:otherwise>
                     </c:choose>
+                    <c:forEach var="category" items="${ad.categories}">
+                        <a class="badge badge-secondary" href="?filter=${category}">${category}</a>
+                    </c:forEach>
                 </p>
             </div>
         </li>

@@ -12,7 +12,7 @@
         <div class="container mt-5 pt-5">
             <h3>${ad.title}</h3>
             <div class="row">
-                <div class="col">
+                <div class="col overflow-auto">
                     <p>Posted on: ${ad.getDayOfWeekCreated()} ${ad.getMonthCreated()} ${ad.getDayOfMonthCreated()}</p>
                     <p>By: ${user.username}</p>
                     <p>${ad.description}</p>
@@ -23,7 +23,7 @@
             </div>
             <div>
                 <c:forEach var="category" items="${ad.categories}">
-                    <a class="badge badge-primary" href="#">${category}</a>
+                    <a class="badge badge-secondary" href="#">${category}</a>
                 </c:forEach>
             </div>
             <div>

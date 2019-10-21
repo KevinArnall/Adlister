@@ -17,11 +17,11 @@
                                 <%--                                                                <form action="https://request-inspector.glitch.me/" method="post">--%>
                                 <div class="form-group">
                                     <label for="title">Title</label>
-                                    <input id="title" name="title" class="form-control" type="text" required>
+                                    <input maxlength="100" id="title" name="title" class="form-control" type="text" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="description">Description</label>
-                                    <textarea id="description" name="description" class="form-control" required></textarea>
+                                    <textarea maxlength="500" id="description" name="description" class="form-control" required></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label>Categories</label>
