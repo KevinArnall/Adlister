@@ -1,6 +1,8 @@
 package com.codeup.adlister.controllers;
 
 import com.codeup.adlister.dao.DaoFactory;
+import com.codeup.adlister.models.Ad;
+import org.apache.http.client.utils.URIBuilder;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,29 +10,58 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet(name = "controllers.AdsIndexServlet", urlPatterns = "/ads")
 public class AdsIndexServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        List<Ad> ads = DaoFactory.getAdsDao().all();
+
         // Check if there was a search
         if (request.getParameter("search") != null) {
             // Get the search term from the parameters/URL
             String search = request.getParameter("search");
-            // Database request using search term
-            request.setAttribute("ads", DaoFactory.getAdsDao().getAdsBySearchTerm(search));
-            // Pass the search term back to the view so it can it still in the search box
+
+            List<Ad> newAds = new ArrayList<>();
+
+            // Go through ads and return ads that match
+            for (Ad ad : ads) {
+                if (ad.getTitle().contains(search) || ad.getDescription().contains(search)) {
+                    newAds.add(ad);
+                }
+            }
+
+            ads = newAds;
+
+            // Pass the search term back to the view so it can still be in the search box
             request.setAttribute("search", search);
-        } else {
-            // Otherwise just get all ads
-            request.setAttribute("ads", DaoFactory.getAdsDao().all());
         }
 
+        // Check if ads were filtered
         if (request.getParameter("filter") != null) {
-            String filter = request.getParameter("filter");
+            // Get filtered parameters
+            String filter = String.join(",", request.getParameterValues("filter"));
+            List<Ad> newAds = new ArrayList<>();
 
-            request.setAttribute("ads", DaoFactory.getAdsDao().getAdsByCategory(filter));
+            // Check if category is in the filter string
+            for (Ad ad : ads) {
+                for (String cat : ad.getCategories()) {
+                    if (filter.contains(cat)) {
+                        newAds.add(ad);
+
+                        // Don't want duplicates if already matches
+                        break;
+                    }
+                }
+            }
+
+            // Pass filters back to view so checkboxes can remain checked
+            request.setAttribute("filter", filter);
+
+            ads = newAds;
         }
 
         // Check if the view changed
@@ -46,13 +77,17 @@ public class AdsIndexServlet extends HttpServlet {
             request.setAttribute("view", "list");
         }
 
+        // Pass final list of ads to view
+        request.setAttribute("ads", ads);
+
         // Redirect to index jsp
         request.getRequestDispatcher("/WEB-INF/ads/index.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String url = "/ads";
+        URIBuilder uri = new URIBuilder();
+        uri.setPath("/ads");
 
         // Check if the user changed the view and change it in the session if they did
         if (request.getParameter("view") != null) {
@@ -63,13 +98,22 @@ public class AdsIndexServlet extends HttpServlet {
             }
         }
 
-        // If the user searched something, append it to the url so doGet can pick it up
+        // If the user searched something, add it to the query string
         if (!request.getParameter("search").equals("")) {
             String searchTerm = request.getParameter("search");
-            url += "?search=" + searchTerm;
+            uri.addParameter("search", searchTerm);
+        }
+
+        // If user checked any of the filter checkboxes, add to query string
+        if (request.getParameterValues("categories") != null) {
+            String[] categories = request.getParameterValues("categories");
+
+            // Join into one string for easy adding
+            String str = String.join(",", categories);
+            uri.addParameter("filter", str);
         }
 
         // Redirect with the appropriate url
-        response.sendRedirect(url);
+        response.sendRedirect(uri.toString());
     }
 }

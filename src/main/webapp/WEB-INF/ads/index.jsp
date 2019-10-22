@@ -36,6 +36,33 @@
                     </c:choose>
                     <label class="form-check-label" for="inlineRadio2">List</label>
                 </div>
+                <div class="form-check">
+                    <c:choose>
+                        <c:when test="${filter.contains('Help Wanted')}">
+                            <input name="categories" class="form-check-input" type="checkbox" value="Help Wanted" id="cat1" checked>
+                        </c:when>
+                        <c:otherwise>
+                            <input name="categories" class="form-check-input" type="checkbox" value="Help Wanted" id="cat1">
+                        </c:otherwise>
+                    </c:choose>
+                    <label class="form-check-label" for="cat1">
+                        Help Wanted
+                    </label>
+                </div>
+                <div class="form-check">
+                    <c:choose>
+                        <c:when test="${filter.contains('For Sale')}">
+                            <input name="categories" class="form-check-input" type="checkbox" value="For Sale" id="cat2" checked>
+                        </c:when>
+                        <c:otherwise>
+                            <input name="categories" class="form-check-input" type="checkbox" value="For Sale" id="cat2">
+                        </c:otherwise>
+                    </c:choose>
+                    <label class="form-check-label" for="cat2">
+                        For Sale
+                    </label>
+                </div>
+                <input name="query" type="hidden" value="${query}">
                 <button type="submit" class="btn btn-primary mb-2 mr-sm-2">Update</button>
             </form>
             <c:choose>

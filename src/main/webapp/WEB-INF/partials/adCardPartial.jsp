@@ -13,7 +13,7 @@
                     <p class="card-text">${ad.getDayOfWeekCreated()} ${ad.getMonthCreated()} ${ad.getDayOfMonthCreated()}</p>
                     <p class="card-text text-truncate">${ad.description}</p>
                     <c:forEach var="category" items="${ad.categories}">
-                        <a class="badge badge-secondary" href="?filter=${category}">${category}</a>
+                        <span class="badge badge-secondary">${category}</span>
                     </c:forEach>
                 </div>
                 <div class="card-footer">

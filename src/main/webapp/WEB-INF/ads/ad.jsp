@@ -23,7 +23,7 @@
             </div>
             <div>
                 <c:forEach var="category" items="${ad.categories}">
-                    <a class="badge badge-secondary" href="#">${category}</a>
+                    <span class="badge badge-secondary">${category}</span>
                 </c:forEach>
             </div>
             <div>

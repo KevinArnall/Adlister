@@ -4,7 +4,7 @@
 <ul class="list-unstyled">
     <c:forEach var="ad" items="${ads}">
         <li class="media mb-3">
-            <img src="https://via.placeholder.com/64" class="align-self-start mr-3" alt="...">
+            <img src="https://via.placeholder.com/64" class="align-self-center mr-3" alt="...">
             <div class="media-body text-truncate">
                 <h5 style="width: 50%" class="mt-0 text-truncate"><a href="/ads/ad?id=${ad.id}">${ad.title}</a>
                 </h5>
@@ -25,7 +25,7 @@
                         </c:otherwise>
                     </c:choose>
                     <c:forEach var="category" items="${ad.categories}">
-                        <a class="badge badge-secondary" href="?filter=${category}">${category}</a>
+                        <span class="badge badge-secondary">${category}</span>
                     </c:forEach>
                 </p>
             </div>
