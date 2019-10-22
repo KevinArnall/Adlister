@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
     <head>
@@ -16,11 +17,31 @@
                             <form action="/login" method="POST">
                                 <div class="form-group">
                                     <label for="username">Username</label>
-                                    <input id="username" name="username" class="form-control" type="text" required>
+                                    <c:choose>
+                                        <c:when test="${usernotfound}">
+                                            <input id="username" name="username" class="form-control is-invalid" type="text">
+                                            <div class="invalid-feedback">
+                                                User not found
+                                            </div>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <input id="username" name="username" class="form-control" type="text">
+                                        </c:otherwise>
+                                    </c:choose>
                                 </div>
                                 <div class="form-group">
                                     <label for="password">Password</label>
-                                    <input id="password" name="password" class="form-control" type="password" required>
+                                    <c:choose>
+                                        <c:when test="${invalidpassword}">
+                                            <input id="password" name="password" class="form-control is-invalid" type="password">
+                                            <div class="invalid-feedback">
+                                                Invalid password
+                                            </div>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <input id="password" name="password" class="form-control" type="password">
+                                        </c:otherwise>
+                                    </c:choose>
                                 </div>
                                 <button class="btn btn-primary btn-block" type="submit">Login</button>
                             </form>

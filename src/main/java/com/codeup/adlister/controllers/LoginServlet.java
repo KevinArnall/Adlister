@@ -22,7 +22,17 @@ public class LoginServlet extends HttpServlet {
             return;
         }
 
-        // Otherwise, send to the login jsp
+        // If they tried to log in and the attempt was unsuccessful
+        if (request.getSession().getAttribute("usernotfound") != null) {
+            request.setAttribute("usernotfound", true);
+            request.getSession().removeAttribute("usernotfound");
+        }
+        if (request.getSession().getAttribute("invalidpassword") != null) {
+            request.setAttribute("invalidpassword", true);
+            request.getSession().removeAttribute("invalidpassword");
+        }
+
+        // Send to the login jsp
         request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
     }
 
@@ -35,6 +45,7 @@ public class LoginServlet extends HttpServlet {
 
         // If the user was not found in the db, redirect back to the login page
         if (user == null) {
+            request.getSession().setAttribute("usernotfound", true);
             response.sendRedirect("/login");
             return;
         }
@@ -57,7 +68,9 @@ public class LoginServlet extends HttpServlet {
                 response.sendRedirect("/profile");
             }
         } else {
-            // Else redirect to the login page
+            // Invalid password error message
+            request.getSession().setAttribute("invalidpassword", true);
+            // Redirect to the login page
             response.sendRedirect("/login");
         }
     }
