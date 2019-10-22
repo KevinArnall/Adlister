@@ -2,6 +2,7 @@ package com.codeup.adlister.controllers;
 
 import com.codeup.adlister.dao.DaoFactory;
 import com.codeup.adlister.models.Ad;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.utils.URIBuilder;
 
 import javax.servlet.ServletException;
@@ -29,7 +30,7 @@ public class AdsIndexServlet extends HttpServlet {
 
             // Go through ads and return ads that match
             for (Ad ad : ads) {
-                if (ad.getTitle().contains(search) || ad.getDescription().contains(search)) {
+                if (StringUtils.containsIgnoreCase(ad.getTitle(), search) || StringUtils.containsIgnoreCase(ad.getDescription(), search)) {
                     newAds.add(ad);
                 }
             }
