@@ -22,11 +22,6 @@
                 </div>
             </div>
             <div>
-                <c:forEach var="category" items="${ad.categories}">
-                    <span class="badge badge-secondary">${category}</span>
-                </c:forEach>
-            </div>
-            <div>
                 <c:choose>
                     <c:when test="${ad.getHoursSinceCreation() >= 24}">
                         <small class="text-muted">Posted ${ad.getDaysSinceCreation()} days ago </small>
@@ -41,6 +36,9 @@
                         <small class="text-muted">Posted ${ad.getSecondsSinceCreation()} seconds ago </small>
                     </c:otherwise>
                 </c:choose>
+                <c:forEach var="category" items="${ad.categories}">
+                    <span class="badge badge-secondary">${category}</span>
+                </c:forEach>
             </div>
         </div>
     </body>
