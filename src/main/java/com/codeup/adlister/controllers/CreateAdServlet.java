@@ -29,6 +29,18 @@ public class CreateAdServlet extends HttpServlet {
             return;
         }
 
+        // If the user was sent back here
+        if (request.getSession().getAttribute("title") != null) {
+            request.setAttribute("title", request.getSession().getAttribute("title"));
+            request.getSession().removeAttribute("title");
+
+            request.setAttribute("description", request.getSession().getAttribute("description"));
+            request.getSession().removeAttribute("description");
+
+            request.setAttribute("needcat", true);
+            request.getSession().removeAttribute("needcat");
+        }
+
         // Redirect to create jsp
         request.getRequestDispatcher("/WEB-INF/ads/create.jsp").forward(request, response);
     }
@@ -38,8 +50,19 @@ public class CreateAdServlet extends HttpServlet {
         // Get the user that is currently logged in
         User user = (User) request.getSession().getAttribute("user");
 
-        // Get the categories that the user selected
-        List<String> categories = Arrays.asList(request.getParameterValues("categories"));
+        List<String> categories;
+
+        if (request.getParameterValues("categories") != null) {
+            // Get the categories that the user selected
+            categories = Arrays.asList(request.getParameterValues("categories"));
+        } else {
+            // Otherwise, save the inputs and redirect back
+            request.getSession().setAttribute("title", request.getParameter("title"));
+            request.getSession().setAttribute("description", request.getParameter("description"));
+            request.getSession().setAttribute("needcat", true);
+            response.sendRedirect("/ads/create");
+            return;
+        }
 
         // Create a new ad from the currently logged in user, the title and description that were submitted, and the current date time
         Ad ad = new Ad(
