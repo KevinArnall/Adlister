@@ -3,7 +3,7 @@
 
 <div class="row">
     <c:forEach var="ad" items="${ads}">
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="card mb-3">
                 <a href="/ads/ad?id=${ad.id}">
                     <img src="https://via.placeholder.com/150" class="card-img-top" alt="...">
