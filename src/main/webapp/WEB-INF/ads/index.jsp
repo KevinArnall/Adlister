@@ -12,15 +12,19 @@
         <div class="container mt-5 pt-5">
             <div class="row">
                 <div class="col-3">
-                    <div class="card">
-                        <div class="card-header text-center">Options</div>
+                    <div class="card position-fixed">
+                        <div class="card-header text-center">
+                            <p class="h5 mb-0">
+                                Options
+                            </p>
+                        </div>
                         <div class="card-body">
                             <form class="mb-0" method="POST" action="/ads">
                                 <div class="form-group">
                                     <input name="search" type="text" class="form-control" id="inlineFormInputName2" value="${search}" placeholder="Search">
                                 </div>
                                 <div class="form-group">
-                                    <p class="card-title">View</p>
+                                    <p class="h5">View</p>
                                     <div class="form-check">
                                         <c:choose>
                                             <c:when test="${view == 'card'}">
@@ -45,7 +49,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <p class="card-title">Filter</p>
+                                    <p class="h5">Filter</p>
                                     <div class="form-check">
                                         <c:choose>
                                             <c:when test="${filter.contains('Help Wanted')}">
