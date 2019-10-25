@@ -61,11 +61,11 @@ public class MySQLCategoriesDao implements Categories {
     }
 
     @Override
-    public void delete(Ad ad) {
+    public void delete(long id) {
         try {
             // Query to delete from association table
             PreparedStatement stmt = connection.prepareStatement("DELETE FROM ad_cat WHERE ad_id = ?");
-            stmt.setLong(1, ad.getId());
+            stmt.setLong(1, id);
 
             stmt.execute();
         } catch (SQLException e) {

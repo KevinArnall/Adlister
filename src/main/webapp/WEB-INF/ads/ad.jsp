@@ -18,6 +18,7 @@
                     <p>${ad.description}</p>
                     <c:if test="${user.username.equals(loggedinuser.username)}">
                         <a class="btn btn-primary" href="/ads/edit?id=${ad.id}">Edit</a>
+                        <a class="btn btn-danger" href="/ads/delete?id=${ad.id}">Delete</a>
                     </c:if>
                 </div>
                 <div class="col text-center">

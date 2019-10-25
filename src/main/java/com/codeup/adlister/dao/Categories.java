@@ -16,5 +16,5 @@ public interface Categories {
     long getCategoryId(String category);
 
     // Delete the categories of an existing ad
-    void delete(Ad ad);
+    void delete(long id);
 }

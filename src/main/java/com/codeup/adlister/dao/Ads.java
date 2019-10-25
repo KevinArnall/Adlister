@@ -26,4 +26,7 @@ public interface Ads {
 
     // Edit an existing ad
     void edit(Ad ad);
+
+    // Delete an existing ad
+    void delete(long id);
 }

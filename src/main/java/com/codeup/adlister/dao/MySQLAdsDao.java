@@ -172,12 +172,24 @@ public class MySQLAdsDao implements Ads {
             rs.next();
 
             // Delete the existing categories
-            DaoFactory.getCategoriesDao().delete(ad);
+            DaoFactory.getCategoriesDao().delete(ad.getId());
             // And add the new ones
             DaoFactory.getCategoriesDao().insert(ad);
 
         } catch (SQLException e) {
             throw new RuntimeException("Error creating a new ad.", e);
+        }
+    }
+
+    @Override
+    public void delete(long id) {
+        try {
+            // Delete query by id
+            PreparedStatement stmt = connection.prepareStatement("DELETE FROM ads WHERE id = ?");
+            stmt.setLong(1, id);
+            stmt.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error deleting ad.", e);
         }
     }
 
