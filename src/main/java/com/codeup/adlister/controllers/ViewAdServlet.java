@@ -9,12 +9,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(name = "controllers.ViewAdServlet", urlPatterns = "/ads/ad")
 public class ViewAdServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        HttpSession session = request.getSession();
 
         // Get the id of the ad from the request
         long id = Long.parseLong(request.getParameter("id"));
@@ -29,8 +32,8 @@ public class ViewAdServlet extends HttpServlet {
         request.setAttribute("user", user);
 
         // Get the logged in user
-        if (request.getSession().getAttribute("user") != null) {
-            request.setAttribute("loggedinuser", request.getSession().getAttribute("user"));
+        if (session.getAttribute("user") != null) {
+            request.setAttribute("loggedinuser", session.getAttribute("user"));
         }
 
         // Send to jsp

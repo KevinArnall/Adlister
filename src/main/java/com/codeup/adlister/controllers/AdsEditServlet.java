@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -20,13 +21,15 @@ public class AdsEditServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        HttpSession session = request.getSession();
+
         // Get the ad from the id sent
         Ad ad = DaoFactory.getAdsDao().getAdById(Long.parseLong(request.getParameter("id")));
 
         // Some security checks
         // Check if the user is logged in
-        if (request.getSession().getAttribute("user") != null) {
-            User user = (User) request.getSession().getAttribute("user");
+        if (session.getAttribute("user") != null) {
+            User user = (User) session.getAttribute("user");
             // Check if the user that is logged in created the ad
             if (user.getId() != ad.getUserId()) {
                 response.sendRedirect("/ads");
@@ -46,15 +49,15 @@ public class AdsEditServlet extends HttpServlet {
         }
 
         // If the user was sent back here
-        if (request.getSession().getAttribute("needcat") != null) {
-            request.setAttribute("title", request.getSession().getAttribute("title"));
-            request.getSession().removeAttribute("title");
+        if (session.getAttribute("needcat") != null) {
+            request.setAttribute("title", session.getAttribute("title"));
+            session.removeAttribute("title");
 
-            request.setAttribute("description", request.getSession().getAttribute("description"));
-            request.getSession().removeAttribute("description");
+            request.setAttribute("description", session.getAttribute("description"));
+            session.removeAttribute("description");
 
             request.setAttribute("needcat", true);
-            request.getSession().removeAttribute("needcat");
+            session.removeAttribute("needcat");
         }
 
         // Pass ad into request
@@ -66,8 +69,10 @@ public class AdsEditServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
+        HttpSession session = request.getSession();
+
         // Get the user that is currently logged in
-        User user = (User) request.getSession().getAttribute("user");
+        User user = (User) session.getAttribute("user");
 
         List<String> categories;
 
@@ -76,9 +81,9 @@ public class AdsEditServlet extends HttpServlet {
             categories = Arrays.asList(request.getParameterValues("categories"));
         } else {
             // Otherwise, save the inputs and redirect back
-            request.getSession().setAttribute("title", request.getParameter("title"));
-            request.getSession().setAttribute("description", request.getParameter("description"));
-            request.getSession().setAttribute("needcat", true);
+            session.setAttribute("title", request.getParameter("title"));
+            session.setAttribute("description", request.getParameter("description"));
+            session.setAttribute("needcat", true);
             response.sendRedirect("/ads/edit?id=" + request.getParameter("id"));
             return;
         }

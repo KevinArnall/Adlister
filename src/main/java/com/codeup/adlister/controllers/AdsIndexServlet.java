@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,7 @@ public class AdsIndexServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        HttpSession session = request.getSession();
         List<Ad> ads = DaoFactory.getAdsDao().all();
 
         // Check if there was a search
@@ -67,8 +69,8 @@ public class AdsIndexServlet extends HttpServlet {
 
         // Check if the view changed
         // Store it in the session so it persists
-        if (request.getSession().getAttribute("view") != null) {
-            if (request.getSession().getAttribute("view").equals("card")) {
+        if (session.getAttribute("view") != null) {
+            if (session.getAttribute("view").equals("card")) {
                 request.setAttribute("view", "card");
             } else {
                 request.setAttribute("view", "list");
@@ -87,15 +89,16 @@ public class AdsIndexServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        HttpSession session = request.getSession();
         URIBuilder uri = new URIBuilder();
         uri.setPath("/ads");
 
         // Check if the user changed the view and change it in the session if they did
         if (request.getParameter("view") != null) {
             if (request.getParameter("view").equals("card")) {
-                request.getSession().setAttribute("view", "card");
+                session.setAttribute("view", "card");
             } else if (request.getParameter("view").equals("list")) {
-                request.getSession().setAttribute("view", "list");
+                session.setAttribute("view", "list");
             }
         }
 

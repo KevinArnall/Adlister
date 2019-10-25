@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -17,9 +18,11 @@ public class RegisterServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        HttpSession session = request.getSession();
+
         // If there were any errors
-        if (request.getSession().getAttribute("errors") != null) {
-            HashMap<String, String> errors = (HashMap<String, String>) request.getSession().getAttribute("errors");
+        if (session.getAttribute("errors") != null) {
+            HashMap<String, String> errors = (HashMap<String, String>) session.getAttribute("errors");
 
             // Loop through errors and add them to the view
             for (String key : errors.keySet()) {
@@ -27,7 +30,7 @@ public class RegisterServlet extends HttpServlet {
             }
 
             // Clear the errors
-            request.getSession().removeAttribute("errors");
+            session.removeAttribute("errors");
         }
 
         // Send to register jsp
@@ -35,6 +38,8 @@ public class RegisterServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        HttpSession session = request.getSession();
 
         // Get the users information from the form
         String username = request.getParameter("username");
@@ -75,7 +80,7 @@ public class RegisterServlet extends HttpServlet {
 
         // If anything is invalid
         if (inputHasErrors) {
-            request.getSession().setAttribute("errors", errors);
+            session.setAttribute("errors", errors);
             response.sendRedirect("/register");
             return;
         }
