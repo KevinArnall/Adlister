@@ -17,8 +17,11 @@
                     <p>By: ${user.username}</p>
                     <p>${ad.description}</p>
                     <c:if test="${user.username.equals(loggedinuser.username)}">
-                        <a class="btn btn-primary" href="/ads/edit?id=${ad.id}">Edit</a>
-                        <a class="btn btn-danger" href="/ads/delete?id=${ad.id}">Delete</a>
+                        <form method="post" action="/ads/delete">
+                            <input name="id" value="${ad.id}" type="hidden">
+                            <a class="btn btn-primary" href="/ads/edit?id=${ad.id}">Edit</a>
+                            <button class="btn btn-danger">Delete</button>
+                        </form>
                     </c:if>
                 </div>
                 <div class="col text-center">

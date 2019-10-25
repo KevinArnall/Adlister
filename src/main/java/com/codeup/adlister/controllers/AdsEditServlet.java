@@ -23,6 +23,20 @@ public class AdsEditServlet extends HttpServlet {
         // Get the ad from the id sent
         Ad ad = DaoFactory.getAdsDao().getAdById(Long.parseLong(request.getParameter("id")));
 
+        // Some security checks
+        // Check if the user is logged in
+        if (request.getSession().getAttribute("user") != null) {
+            User user = (User) request.getSession().getAttribute("user");
+            // Check if the user that is logged in created the ad
+            if (user.getId() != ad.getUserId()) {
+                response.sendRedirect("/ads");
+                return;
+            }
+        } else {
+            response.sendRedirect("/ads");
+            return;
+        }
+
         // Check what categories were already selected
         if (ad.getCategories().contains("For Sale")) {
             request.setAttribute("forsale", true);

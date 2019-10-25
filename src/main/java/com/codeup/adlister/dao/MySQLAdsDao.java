@@ -9,7 +9,7 @@ import java.util.List;
 
 public class MySQLAdsDao implements Ads {
 
-    private Connection connection = null;
+    private Connection connection;
 
     // Constructor
     public MySQLAdsDao(Config config) {

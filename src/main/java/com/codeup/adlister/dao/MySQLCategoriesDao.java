@@ -9,7 +9,7 @@ import java.util.List;
 
 public class MySQLCategoriesDao implements Categories {
 
-    private Connection connection = null;
+    private Connection connection;
 
     public MySQLCategoriesDao(Config config) {
         try {
