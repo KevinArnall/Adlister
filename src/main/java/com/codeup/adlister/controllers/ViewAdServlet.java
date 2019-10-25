@@ -28,6 +28,11 @@ public class ViewAdServlet extends HttpServlet {
         request.setAttribute("ad", ad);
         request.setAttribute("user", user);
 
+        // Get the logged in user
+        if (request.getSession().getAttribute("user") != null) {
+            request.setAttribute("loggedinuser", request.getSession().getAttribute("user"));
+        }
+
         // Send to jsp
         request.getRequestDispatcher("/WEB-INF/ads/ad.jsp").forward(request, response);
     }

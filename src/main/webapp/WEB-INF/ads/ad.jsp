@@ -16,6 +16,9 @@
                     <p>Posted on: ${ad.getDayOfWeekCreated()} ${ad.getMonthCreated()} ${ad.getDayOfMonthCreated()}</p>
                     <p>By: ${user.username}</p>
                     <p>${ad.description}</p>
+                    <c:if test="${user.username.equals(loggedinuser.username)}">
+                        <a class="btn btn-primary" href="/ads/edit?id=${ad.id}">Edit</a>
+                    </c:if>
                 </div>
                 <div class="col text-center">
                     <img src="https://via.placeholder.com/300" class="img-thumbnail" alt="...">

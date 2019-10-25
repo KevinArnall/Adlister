@@ -61,6 +61,19 @@ public class MySQLCategoriesDao implements Categories {
     }
 
     @Override
+    public void delete(Ad ad) {
+        try {
+            // Query to delete from association table
+            PreparedStatement stmt = connection.prepareStatement("DELETE FROM ad_cat WHERE ad_id = ?");
+            stmt.setLong(1, ad.getId());
+
+            stmt.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error inserting categories into db");
+        }
+    }
+
+    @Override
     public long getCategoryId(String category) {
         try {
             // Statement to get the id of a category

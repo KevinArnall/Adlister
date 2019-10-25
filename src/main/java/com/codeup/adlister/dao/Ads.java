@@ -23,4 +23,7 @@ public interface Ads {
 
     // Get a list of ads based on category
     List<Ad> getAdsByCategory(String filter);
+
+    // Edit an existing ad
+    void edit(Ad ad);
 }
