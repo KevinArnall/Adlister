@@ -6,9 +6,12 @@
         <li class="media mb-3">
             <img src="https://via.placeholder.com/64" class="align-self-center mr-3" alt="...">
             <div class="media-body text-truncate">
-                <h5 style="width: 50%" class="mt-0 text-truncate"><a href="/ads/ad?id=${ad.id}">${ad.title}</a>
+                <h5 style="width: 50%" class="mt-0 text-truncate">
+                    <a href="/ads/ad?id=${ad.id}">
+                        <c:out value="${ad.title}"/>
+                    </a>
                 </h5>
-                    ${ad.description}
+                <c:out value="${ad.description}"/>
                 <p>
                     <c:choose>
                         <c:when test="${ad.getHoursSinceCreation() >= 24}">

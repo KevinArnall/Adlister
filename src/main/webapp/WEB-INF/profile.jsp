@@ -10,7 +10,7 @@
         <jsp:include page="/WEB-INF/partials/navbar.jsp"/>
 
         <div class="container mt-5 pt-5">
-            <h1>Welcome, ${sessionScope.user.username}!</h1>
+            <h1>Welcome, <c:out value="${sessionScope.user.username}"/>!</h1>
             <h1>Here are all the ads you have created</h1>
             <c:choose>
                 <c:when test="${view =='list'}">

@@ -10,12 +10,16 @@
     <body>
         <jsp:include page="/WEB-INF/partials/navbar.jsp"/>
         <div class="container mt-5 pt-5">
-            <h3>${ad.title}</h3>
+            <h3>
+                <c:out value="${ad.title}"/>
+            </h3>
             <div class="row">
                 <div class="col overflow-auto">
                     <p>Posted on: ${ad.getDayOfWeekCreated()} ${ad.getMonthCreated()} ${ad.getDayOfMonthCreated()}</p>
-                    <p>By: ${user.username}</p>
-                    <p>${ad.description}</p>
+                    <p>By: <c:out value="${user.username}"/></p>
+                    <p>
+                        <c:out value="${ad.description}"/>
+                    </p>
                     <c:if test="${user.username.equals(loggedinuser.username)}">
                         <form method="post" action="/ads/delete">
                             <input name="id" value="${ad.id}" type="hidden">

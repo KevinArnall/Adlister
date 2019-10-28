@@ -9,9 +9,15 @@
                     <img src="https://via.placeholder.com/150" class="card-img-top" alt="...">
                 </a>
                 <div class="card-body">
-                    <h5 class="card-title text-truncate"><a href="/ads/ad?id=${ad.id}">${ad.title}</a></h5>
+                    <h5 class="card-title text-truncate">
+                        <a href="/ads/ad?id=${ad.id}">
+                            <c:out value="${ad.title}"/>
+                        </a>
+                    </h5>
                     <p class="card-text">${ad.getDayOfWeekCreated()} ${ad.getMonthCreated()} ${ad.getDayOfMonthCreated()}</p>
-                    <p class="card-text text-truncate">${ad.description}</p>
+                    <p class="card-text text-truncate">
+                        <c:out value="${ad.description}"/>
+                    </p>
                     <c:forEach var="category" items="${ad.categories}">
                         <span class="badge badge-secondary">${category}</span>
                     </c:forEach>
