@@ -40,14 +40,6 @@ public class AdsEditServlet extends HttpServlet {
             return;
         }
 
-        // Check what categories were already selected
-        if (ad.getCategories().contains("For Sale")) {
-            request.setAttribute("forsale", true);
-        }
-        if (ad.getCategories().contains("Help Wanted")) {
-            request.setAttribute("helpwanted", true);
-        }
-
         // If the user was sent back here
         if (session.getAttribute("needcat") != null) {
             request.setAttribute("title", session.getAttribute("title"));
@@ -62,6 +54,9 @@ public class AdsEditServlet extends HttpServlet {
 
         // Pass ad into request
         request.setAttribute("ad", ad);
+
+        // Get the list of all the categories
+        request.setAttribute("categories", DaoFactory.getCategoriesDao().all());
 
         // To JSP
         request.getRequestDispatcher("/WEB-INF/ads/edit.jsp").forward(request, response);
