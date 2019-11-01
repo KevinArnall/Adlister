@@ -41,14 +41,12 @@
                                             </div>
                                         </c:when>
                                         <c:otherwise>
-                                            <div class="form-check">
-                                                <input class="form-check-input" name="categories" type="checkbox" id="inlineCheckbox1" value="For Sale">
-                                                <label class="form-check-label" for="inlineCheckbox1">For sale</label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" name="categories" type="checkbox" id="inlineCheckbox2" value="Help Wanted">
-                                                <label class="form-check-label" for="inlineCheckbox2">Help Wanted</label>
-                                            </div>
+                                            <c:forEach var="category" items="${categories}">
+                                                <div class="form-check">
+                                                    <input name="categories" class="form-check-input" type="checkbox" value="${category}" id="${category}">
+                                                    <label class="form-check-label" for="${category}">${category}</label>
+                                                </div>
+                                            </c:forEach>
                                         </c:otherwise>
                                     </c:choose>
                                 </div>

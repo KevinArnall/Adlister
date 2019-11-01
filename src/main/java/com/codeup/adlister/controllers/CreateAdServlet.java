@@ -45,6 +45,9 @@ public class CreateAdServlet extends HttpServlet {
             session.removeAttribute("needcat");
         }
 
+        // Get list of categories from db
+        request.setAttribute("categories", DaoFactory.getCategoriesDao().all());
+
         // Redirect to create jsp
         request.getRequestDispatcher("/WEB-INF/ads/create.jsp").forward(request, response);
     }
