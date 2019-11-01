@@ -6,6 +6,9 @@ import java.util.List;
 
 public interface Categories {
 
+    // Get a list of all the categories
+    List<String> all();
+
     // Get a list of categories with this ad id
     List<String> getCategoriesByAdId(long id);
 

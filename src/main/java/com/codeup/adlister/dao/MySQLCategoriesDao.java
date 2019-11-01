@@ -26,6 +26,20 @@ public class MySQLCategoriesDao implements Categories {
     }
 
     @Override
+    public List<String> all() {
+        try {
+            // Get every category in the table
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM categories");
+
+            ResultSet rs = stmt.executeQuery();
+
+            return createCategoriesFromResults(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving list of all categories", e);
+        }
+    }
+
+    @Override
     public List<String> getCategoriesByAdId(long id) {
         try {
             // Prepare new statement to get the category names that are associated with this ad id
@@ -36,7 +50,6 @@ public class MySQLCategoriesDao implements Categories {
             ResultSet rs = stmt.executeQuery();
 
             return createCategoriesFromResults(rs);
-
         } catch (SQLException e) {
             throw new RuntimeException("Error retrieving categories by id");
         }

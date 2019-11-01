@@ -26,52 +26,22 @@
                                 <div class="form-group">
                                     <p class="h5">View</p>
                                     <div class="form-check">
-                                        <c:choose>
-                                            <c:when test="${view == 'card'}">
-                                                <input class="form-check-input" checked type="radio" name="view" id="inlineRadio1" value="card">
-                                            </c:when>
-                                            <c:otherwise>
-                                                <input class="form-check-input" type="radio" name="view" id="inlineRadio1" value="card">
-                                            </c:otherwise>
-                                        </c:choose>
+                                        <input class="form-check-input" type="radio" name="view" id="inlineRadio1" value="card" <c:if test="${view == 'card'}">checked</c:if>>
                                         <label class="form-check-label" for="inlineRadio1">Cards</label>
                                     </div>
                                     <div class="form-check">
-                                        <c:choose>
-                                            <c:when test="${view == 'list'}">
-                                                <input class="form-check-input" checked type="radio" name="view" id="inlineRadio2" value="list">
-                                            </c:when>
-                                            <c:otherwise>
-                                                <input class="form-check-input" type="radio" name="view" id="inlineRadio2" value="list">
-                                            </c:otherwise>
-                                        </c:choose>
+                                        <input class="form-check-input" type="radio" name="view" id="inlineRadio2" value="list" <c:if test="${view == 'list'}">checked</c:if>>
                                         <label class="form-check-label" for="inlineRadio2">List</label>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <p class="h5">Filter</p>
-                                    <div class="form-check">
-                                        <c:choose>
-                                            <c:when test="${filter.contains('Help Wanted')}">
-                                                <input name="categories" class="form-check-input" type="checkbox" value="Help Wanted" id="cat1" checked>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <input name="categories" class="form-check-input" type="checkbox" value="Help Wanted" id="cat1">
-                                            </c:otherwise>
-                                        </c:choose>
-                                        <label class="form-check-label" for="cat1">Help Wanted</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <c:choose>
-                                            <c:when test="${filter.contains('For Sale')}">
-                                                <input name="categories" class="form-check-input" type="checkbox" value="For Sale" id="cat2" checked>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <input name="categories" class="form-check-input" type="checkbox" value="For Sale" id="cat2">
-                                            </c:otherwise>
-                                        </c:choose>
-                                        <label class="form-check-label" for="cat2">For Sale</label>
-                                    </div>
+                                    <c:forEach var="category" items="${categories}">
+                                        <div class="form-check">
+                                            <input name="categories" class="form-check-input" type="checkbox" value="${category}" id="${category}" <c:if test="${filter.contains(category)}">checked</c:if>>
+                                            <label class="form-check-label" for="${category}">${category}</label>
+                                        </div>
+                                    </c:forEach>
                                 </div>
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-primary">Apply</button>

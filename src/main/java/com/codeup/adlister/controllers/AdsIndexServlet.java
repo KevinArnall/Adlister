@@ -83,6 +83,9 @@ public class AdsIndexServlet extends HttpServlet {
         // Pass final list of ads to view
         request.setAttribute("ads", ads);
 
+        // Get a list of all the categories in the db so it is easy to create a list of them
+        request.setAttribute("categories", DaoFactory.getCategoriesDao().all());
+
         // Redirect to index jsp
         request.getRequestDispatcher("/WEB-INF/ads/index.jsp").forward(request, response);
     }
